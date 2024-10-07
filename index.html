@@ -7,6 +7,7 @@
     <meta name="description" content="聚浪 - 全新客户端，体验前所未有的速度和功能。">
     <meta name="keywords" content="聚浪, 客户端, 外设排名, 项目地址">
     <title>聚浪</title>
+    <link rel="icon" href="ocean.png" type="image/png">
     <style>
         :root {
             --main-bg: #f5f5f5;
@@ -115,20 +116,18 @@
             padding: 20px;
         }
 
-        .hero {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            z-index: 3;
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border: none;
-            outline: none;
-        }
+.hero {
+    position: absolute; /* 继续使用绝对定位 */
+    top: 22%; /* 可以根据需要调整 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 4; /* 确保在视频上方 */
+    width: 600px; /* 固定宽度 */
+    height: 300px; /* 固定高度 */
+    overflow: hidden; /* 隐藏溢出内容 */
+}
 
         .hero h1 {
             font-size: 48px;
@@ -403,7 +402,7 @@
                         <div class="date-container">
                             <p class="date">2024-09-21</p>
                         </div>
-                        <p>这是第一个更新的简介。</p>
+                        <p>试图通过作弊获取优势，<br>破坏游戏公平性。</p>
                     </div>
                 </div>
                 <div class="update-item">
@@ -413,7 +412,7 @@
                         <div class="date-container">
                             <p class="date">2024-09-20</p>
                         </div>
-                        <p>这是第二个更新的简介。</p>
+                        <p>对于作弊者，终将遭遇惩罚，<br>失去游戏乐趣。</p>
                     </div>
                 </div>
                 <div class="update-item">
@@ -423,7 +422,7 @@
                         <div class="date-container">
                             <p class="date">2024-09-19</p>
                         </div>
-                        <p>这是第三个更新的简介。</p>
+                        <p>团队的信任被背叛，<br>游戏社区的声誉受损。</p>
                     </div>
                 </div>
             </div>
@@ -444,7 +443,7 @@
         }
 
         const bgm = document.getElementById('bgm');
-        bgm.volume = 0.2; // 设置音量为 20%
+        bgm.volume = 0.08; // 设置音量为 20%
     </script>
 </body>
 
