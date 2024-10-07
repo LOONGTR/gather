@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="聚浪 - 全新客户端，体验前所未有的速度和功能。">
+    <meta name="keywords" content="聚浪, 客户端, 外设排名, 项目地址">
+    <title>聚浪</title>
+    <style>
+        :root {
+            --main-bg: #f5f5f5;
+            --menu-bg: #000000;
+            --button-bg: #ffa600;
+            --hover-bg: #000000;
+            --text-color: #fff;
+            --footer-color: rgb(17, 17, 17);
+            --info-bg: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgb(0, 0, 0);
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .menu-button {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-button div {
+            width: 100%;
+            height: 4px;
+            background-color: var(--text-color);
+        }
+
+        .side-menu {
+            position: fixed;
+            right: -340px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: var(--menu-bg);
+            color: white;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .close-btn {
+            background-color: transparent;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .menu-title {
+            font-size: 24px;
+            color: white;
+            margin: 20px 0;
+            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .side-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .side-menu a:hover {
+            background-color: var(--hover-bg);
+        }
+
+        main {
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero {
+            position: absolute;
+            top: 22%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 3;
+            width: 100%;
+            height: 100;
+            object-fit: cover;
+            border: none;
+            outline: none;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin: 0 0 10px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .hero .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--button-bg);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .info-block {
+            background-color: var(--info-bg);
+            color: black;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: relative;
+            top: -50px;
+            left: -20px;
+            right: -20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .updates-module {
+            background-color: var(--info-bg);
+            color: black;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: relative;
+            top: -80px;
+            left: -20px;
+            right: -20px;
+            z-index: 3;
+        }
+
+        .update-item img:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+            /* 增加过渡时间 */
+        }
+
+        .updates::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .updates::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 9px;
+        }
+
+        .updates::-webkit-scrollbar-thumb {
+            background: #a3a2a2;
+            border-radius: 9px;
+        }
+
+        .updates::-webkit-scrollbar-thumb:hover {
+            background: #636262;
+        }
+
+        .updates {
+            justify-content: flex-start;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+        }
+
+        .update-item {
+            display: inline-block;
+            flex-direction: column;
+            text-align: center;
+            width: 300px;
+            margin: 10px;
+        }
+
+        .update-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 7px;
+            margin-bottom: 10px;
+        }
+
+        .update-item h3 {
+            color: red;
+            margin: 0;
+            font-size: 12px;
+            /* 设置标题为12px */
+        }
+
+        .update-item .date {
+            color: gray;
+            /* 设置日期为灰色 */
+            font-size: 12px;
+            /* 设置日期为12px */
+        }
+
+        .update-item .date-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            /* 日期字体大小 */
+        }
+
+        .update-item p {
+            color: black;
+            margin-top: 5px;
+            font-size: 18px;
+            /* 设置简介为18px */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: rgb(17, 17, 17);
+            color: white;
+        }
+
+        video {
+            width: 100vw;
+            height: auto;
+            max-height: 60vh;
+            position: relative;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: cover;
+            border: none;
+            outline: none;
+            z-index: 0;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 60vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            .video-overlay {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">🌊聚浪</div>
+        <button class="menu-button" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </button>
+    </header>
+
+    <nav id="sideMenu" class="side-menu" aria-hidden="true">
+        <button class="close-btn" onclick="toggleMenu()">×</button>
+        <div class="menu-title">🌊聚浪</div>
+        <a href="#">首页</a>
+        <a href="#">🥇外设排名</a>
+        <a href="#">🌊聚浪计划</a>
+        <a href="#">🚧项目地址</a>
+        <a href="ez/index.html">⌨ EZ 60/63</a>
+        <a href="wootility/index.html">⌨ wootility</a>
+        <a href="v5/index.html">⌨ wootility V5</a>
+        <div class="footer" style="margin-top: auto; text-align: center; font-size: 12px; color: #ccc;">
+            © 2024 聚浪版权所有，免费开源禁止售卖
+        </div>
+    </nav>
+
+    <main>
+        <video autoplay muted loop>
+            <source
+                src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news/409ab2fc369ba5e1fe50bac10c6676d7d1365a9f.mp4"
+                type="video/mp4">
+            您的浏览器不支持视频标签。
+        </video>
+        <div class="video-overlay"></div>
+        <div class="hero">
+            <h1>全新客户端</h1>
+            <p>体验前所未有的速度和功能。</p>
+            <a href="#" class="button">了解更多</a>
+        </div>
+
+        <div class="info-block">
+            <h2>强大的功能与外观</h2>
+            <p>当设备检测到玩家作弊时，将通过鼠标释放出2万伏高压电，强大的功能和惊艳的外观，在游戏中为您带来不一样的体验。</p>
+        </div>
+
+        <div class="updates-module" id="updates-module">
+            <h2>最新更新</h2>
+            <div class="updates">
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=DMA" alt="DMA 更新图片">
+                    <div>
+                        <h3>DMA</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-21</p>
+                        </div>
+                        <p>这是第一个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=4000" alt="更新图片">
+                    <div>
+                        <h3>4000</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-20</p>
+                        </div>
+                        <p>这是第二个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=+" alt="更新图片">
+                    <div>
+                        <h3>+</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-19</p>
+                        </div>
+                        <p>这是第三个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=新增内容" alt="更新图片">
+                    <div>
+                        <h3>新增内容</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-18</p>
+                        </div>
+                        <p>这是第四个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=功能改进" alt="更新图片">
+                    <div>
+                        <h3>功能改进</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-17</p>
+                        </div>
+                        <p>这是第五个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=bug修复" alt="更新图片">
+                    <div>
+                        <h3>bug修复</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-16</p>
+                        </div>
+                        <p>这是第六个更新的简介。</p>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=用户反馈" alt="更新图片">
+                    <div>
+                        <h3>用户反馈</h3>
+                        <div class="date-container">
+                            <p class="date">2024-09-15</p>
+                        </div>
+                        <p>这是第七个更新的简介。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 聚浪版权所有，免费开源禁止售卖</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            const isHidden = sideMenu.getAttribute('aria-hidden') === 'true';
+            sideMenu.style.right = isHidden ? '0' : '-340px';
+            sideMenu.setAttribute('aria-hidden', !isHidden);
+        }
+    </script>
+</body>
+
+</html>
