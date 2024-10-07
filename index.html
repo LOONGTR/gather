@@ -11,11 +11,11 @@
         :root {
             --main-bg: #f5f5f5;
             --menu-bg: #000000;
-            --button-bg: #ffa600;
+            --button-bg: #ffffff;
             --hover-bg: #000000;
             --text-color: #fff;
             --footer-color: rgb(17, 17, 17);
-            --info-bg: #ffffff;
+            --info-bg: #000000;
         }
 
         body {
@@ -23,6 +23,8 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            background-color: #000;
+            /* 将背景色设置为黑色 */
         }
 
         header {
@@ -115,14 +117,14 @@
 
         .hero {
             position: absolute;
-            top: 22%;
+            top: 20%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             color: white;
             z-index: 3;
             width: 100%;
-            height: 100;
+            height: auto;
             object-fit: cover;
             border: none;
             outline: none;
@@ -142,22 +144,48 @@
             display: inline-block;
             padding: 15px 30px;
             background-color: var(--button-bg);
-            color: white;
+            color: rgb(0, 0, 0);
             text-decoration: none;
             border-radius: 5px;
             font-size: 18px;
             margin-top: 10px;
         }
 
+        .brand-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 允许 logo 换行 */
+            gap: 20px;
+            /* logo 之间的间距 */
+            padding: 20px 0;
+            margin-top: -30px;
+        }
+
+        .brand-logos img {
+            width: 250px;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out;
+            /* 灰度显示 */
+        }
+
+        .brand-logos img:hover {
+            transform: scale(1.1);
+            /* 放大效果 */
+            filter: grayscale(0);
+            /* 移除灰度 */
+        }
+
         .info-block {
             background-color: var(--info-bg);
-            color: black;
+            color: rgb(255, 255, 255);
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
             position: relative;
-            top: -50px;
             left: -20px;
             right: -20px;
             text-align: center;
@@ -166,16 +194,15 @@
 
         .updates-module {
             background-color: var(--info-bg);
-            color: black;
+            color: rgb(255, 255, 255);
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            position: relative;
-            top: -80px;
-            left: -20px;
+            top: -20px;
+            left: 20px;
             right: -20px;
-            z-index: 3;
+            text-align: center;
+            /* 添加此行 */
         }
 
         .update-item img:hover {
@@ -203,31 +230,63 @@
         }
 
         .updates {
-            justify-content: flex-start;
+            display: flex;
+            /* 使用 flex 布局 */
+            justify-content: center;
+            /* 让所有子元素在横向居中 */
             overflow-x: auto;
+            /* 横向滚动 */
             white-space: nowrap;
-            padding-bottom: 10px;
+            /* 不换行 */
+            padding: 10px 0;
+            /* 顶部和底部内边距 */
+            position: relative;
+            /* 确保其相对定位 */
+            z-index: 2;
+            /* 设置较低的 z-index */
         }
+
+
 
         .update-item {
             display: inline-block;
+            /* 使每个更新项在行内显示 */
             flex-direction: column;
+            /* 纵向排列内容 */
             text-align: center;
             width: 300px;
-            margin: 10px;
+            /* 增大每个项的宽度 */
+            margin: 15px;
+            /* 给每个项添加外边距 */
+            position: relative;
+            /* 确保相对定位 */
+            z-index: 3;
+            /* 设置较高的 z-index */
         }
+
 
         .update-item img {
-            width: 100%;
+            width: 300px;
+            /* 增大图片宽度 */
             height: auto;
+            /* 自适应高度 */
             aspect-ratio: 16 / 9;
+            /* 保持宽高比 */
             object-fit: cover;
+            /* 确保图片覆盖区域 */
             border-radius: 7px;
+            /* 圆角效果 */
             margin-bottom: 10px;
+            /* 底部间距 */
+            position: relative;
+            /* 确保图片相对定位 */
+            z-index: 4;
+            /* 确保图片在最上层 */
         }
 
+
         .update-item h3 {
-            color: red;
+            color: rgb(255, 255, 255);
             margin: 0;
             font-size: 12px;
             /* 设置标题为12px */
@@ -249,7 +308,7 @@
         }
 
         .update-item p {
-            color: black;
+            color: rgb(255, 255, 255);
             margin-top: 5px;
             font-size: 18px;
             /* 设置简介为18px */
@@ -276,26 +335,14 @@
             z-index: 0;
         }
 
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            max-height: 60vh;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        @media (max-width: 900px) {
-            .video-overlay {
-                height: 60vh;
-            }
-        }
     </style>
 </head>
 
 <body>
+    <audio id="bgm" autoplay loop>
+        <source src="KORDHELL x VALORANT VYSE.mp3" type="audio/mpeg">
+        您的浏览器不支持音频标签。
+    </audio>
     <header>
         <div class="logo">🌊聚浪</div>
         <button class="menu-button" onclick="toggleMenu()">
@@ -320,16 +367,15 @@
         </div>
     </nav>
 
-    <main>
-        <video autoplay muted loop>
+    <main>   
+        <video autoplay muted loop style="opacity: 0.5;">
             <source
                 src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news/409ab2fc369ba5e1fe50bac10c6676d7d1365a9f.mp4"
                 type="video/mp4">
             您的浏览器不支持视频标签。
         </video>
-        <div class="video-overlay"></div>
         <div class="hero">
-            <h1>全新客户端</h1>
+            <h1>聚浪-全新客户端</h1>
             <p>体验前所未有的速度和功能。</p>
             <a href="#" class="button">了解更多</a>
         </div>
@@ -337,13 +383,21 @@
         <div class="info-block">
             <h2>强大的功能与外观</h2>
             <p>当设备检测到玩家作弊时，将通过鼠标释放出2万伏高压电，强大的功能和惊艳的外观，在游戏中为您带来不一样的体验。</p>
+            <br><h3>合作伙伴</h3>
+        </div>
+
+        <!-- Brand Logos Section -->
+        <div class="brand-logos">
+            <img src="img/Tencent-games_logo.png" alt="Tencent game">
+            <img src="img/valorant.png" alt="valorant">
+            <img src="https://www.okx.com/cdn/assets/imgs/2210/499A92F3657A52EC.png" alt="Mclaren">
         </div>
 
         <div class="updates-module" id="updates-module">
             <h2>最新更新</h2>
             <div class="updates">
                 <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=DMA" alt="DMA 更新图片">
+                    <img src="https://game.gtimg.cn/images/val/agamezlk/map/bind/cover.PNG" alt="DMA 更新图片">
                     <div>
                         <h3>DMA</h3>
                         <div class="date-container">
@@ -353,7 +407,7 @@
                     </div>
                 </div>
                 <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=4000" alt="更新图片">
+                    <img src="https://game.gtimg.cn/images/val/agamezlk/map/haven/cover.PNG" alt="更新图片">
                     <div>
                         <h3>4000</h3>
                         <div class="date-container">
@@ -363,7 +417,7 @@
                     </div>
                 </div>
                 <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=+" alt="更新图片">
+                    <img src="https://game.gtimg.cn/images/val/agamezlk/map/split/cover.PNG" alt="更新图片">
                     <div>
                         <h3>+</h3>
                         <div class="date-container">
@@ -372,47 +426,8 @@
                         <p>这是第三个更新的简介。</p>
                     </div>
                 </div>
-                <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=新增内容" alt="更新图片">
-                    <div>
-                        <h3>新增内容</h3>
-                        <div class="date-container">
-                            <p class="date">2024-09-18</p>
-                        </div>
-                        <p>这是第四个更新的简介。</p>
-                    </div>
-                </div>
-                <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=功能改进" alt="更新图片">
-                    <div>
-                        <h3>功能改进</h3>
-                        <div class="date-container">
-                            <p class="date">2024-09-17</p>
-                        </div>
-                        <p>这是第五个更新的简介。</p>
-                    </div>
-                </div>
-                <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=bug修复" alt="更新图片">
-                    <div>
-                        <h3>bug修复</h3>
-                        <div class="date-container">
-                            <p class="date">2024-09-16</p>
-                        </div>
-                        <p>这是第六个更新的简介。</p>
-                    </div>
-                </div>
-                <div class="update-item">
-                    <img src="https://via.placeholder.com/250x140/FF5733/FFFFFF?text=用户反馈" alt="更新图片">
-                    <div>
-                        <h3>用户反馈</h3>
-                        <div class="date-container">
-                            <p class="date">2024-09-15</p>
-                        </div>
-                        <p>这是第七个更新的简介。</p>
-                    </div>
-                </div>
             </div>
+        </div>
         </div>
     </main>
 
@@ -427,6 +442,9 @@
             sideMenu.style.right = isHidden ? '0' : '-340px';
             sideMenu.setAttribute('aria-hidden', !isHidden);
         }
+
+        const bgm = document.getElementById('bgm');
+        bgm.volume = 0.2; // 设置音量为 20%
     </script>
 </body>
 
