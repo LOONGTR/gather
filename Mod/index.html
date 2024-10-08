@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选配网站</title>
+    <style>
+        body {
+            background-color: rgb(238, 239, 242);
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background-color: white;
+        }
+
+        .logo-container {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-container, .shell-container, .switch-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .product-module, .shell-module, .switch-module {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            width: 400px;
+            text-align: center;
+            flex: 0 1 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .product-image, .shell-image, .switch-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product-description, .shell-description, .switch-description {
+            margin: 10px 0;
+        }
+
+        .product-price, .shell-price, .switch-price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .section-title {
+            margin: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .shift-left {
+            transform: translateX(-20px);
+            opacity: 0.5;
+        }
+
+        .bubble {
+            margin: 20px;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .total-price {
+            margin: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="https://wooting.io/wf/612ca8920bc3a648125ffac3/615c6926b8cbb7d336f64d83_Main_Logo_black.svg" alt="Logo" class="logo">
+        </div>
+    </header>
+    
+    <div id="selectionTitle" class="section-title">选择键盘</div>
+
+    <div class="product-container" id="productContainer">
+        <div class="product-module" onclick="selectProduct('Wooting 60HE+全新键盘', 1649.00)">
+            <img src="https://via.placeholder.com/400x200?text=Wooting+60HE+%E5%85%A8%E6%96%B0%E9%94%AE%E7%9B%98" alt="Wooting 60HE+全新键盘" class="product-image">
+            <div class="product-description">Wooting 60HE+全新键盘</div>
+            <div class="product-price">价格: ¥1649.00</div>
+        </div>
+
+        <div class="product-module" onclick="selectProduct('Wooting 60HE+ PCB', 1450.00)">
+            <img src="https://via.placeholder.com/400x200?text=Wooting+60HE+PCB" alt="Wooting 60HE+ PCB" class="product-image">
+            <div class="product-description">Wooting 60HE+ PCB</div>
+            <div class="product-price">价格: ¥1450.00</div>
+        </div>
+
+        <div class="product-module" onclick="selectProduct('自行寄送', 0.00)">
+            <img src="https://via.placeholder.com/400x200?text=%E8%87%AA%E8%A1%8C%E5%AF%84%E9%80%81" alt="自行寄送" class="product-image">
+            <div class="product-description">已经有键盘自行寄送</div>
+            <div class="product-price">价格: ¥0.00</div>
+        </div>
+    </div>
+
+    <div id="selectedProduct" class="bubble" style="display: none;"></div>
+    <div class="shell-container" id="shellSelection" style="display: none;">
+        <div class="shell-module" onclick="selectShell('Aim60', 529.00)">
+            <img src="https://via.placeholder.com/400x200?text=Aim60" alt="Aim60" class="shell-image">
+            <div class="shell-description">Aim60</div>
+            <div class="shell-price">价格: ¥529.00</div>
+        </div>
+
+        <div class="shell-module" onclick="selectShell('Doki 60', 599.00)">
+            <img src="https://via.placeholder.com/400x200?text=Doki+60" alt="Doki 60" class="shell-image">
+            <div class="shell-description">Doki 60</div>
+            <div class="shell-price">价格: ¥599.00</div>
+        </div>
+
+        <div class="shell-module" onclick="selectShell('金龙浮雕外壳', 999.00)">
+            <img src="https://via.placeholder.com/400x200?text=%E9%87%91%E9%BE%99%E6%B5%AE%E9%9C%B2%E5%A4%96%E5%A3%B3" alt="金龙浮雕外壳" class="shell-image">
+            <div class="shell-description">金龙浮雕外壳</div>
+            <div class="shell-price">价格: ¥999.00</div>
+        </div>
+    </div>
+
+    <div class="switch-container" id="switchSelection" style="display: none;">
+        <div class="switch-module">
+            <img src="https://via.placeholder.com/400x200?text=%E7%A3%81%E9%BB%84%E8%BD%B4" alt="磁玉轴" class="switch-image">
+            <div class="switch-description">磁玉轴</div>
+            <input type="number" id="magneticCount" value="0" min="0" max="61" onchange="calculateTotalPrice()">
+            <div class="switch-price">价格: ¥5.50/颗</div>
+        </div>
+
+        <div class="switch-module">
+            <img src="https://via.placeholder.com/400x200?text=%E4%B8%87%E7%A3%81%E7%8E%8B%E8%BD%B4" alt="万磁王轴" class="switch-image">
+            <div class="switch-description">万磁王轴</div>
+            <input type="number" id="magnetKingCount" value="0" min="0" max="61" onchange="calculateTotalPrice()">
+            <div class="switch-price">价格: ¥5.90/颗</div>
+        </div>
+    </div>
+
+    <div class="total-price" id="totalPrice" style="display: none;">总价格: ¥0.00</div>
+
+    <script>
+        let selectedModel = '';
+        let selectedPrice = 0;
+        let selectedShell = '';
+        let selectedShellPrice = 0;
+
+        function selectProduct(model, price) {
+            console.log(`选择的型号: ${model}, 价格: ¥${price}`);
+            selectedModel = model;
+            selectedPrice = price;
+
+            const selectedDisplay = document.getElementById('selectedProduct');
+            selectedDisplay.innerHTML = `<h3>已选择产品</h3><p>型号: ${model}</p><p>价格: ¥${price}</p>`;
+            selectedDisplay.style.display = 'block';
+
+            const title = document.getElementById('selectionTitle');
+            title.innerText = '选择外壳';
+
+            const container = document.getElementById('productContainer');
+            const modules = container.getElementsByClassName('product-module');
+            for (let i = 0; i < modules.length; i++) {
+                modules[i].classList.toggle('shift-left');
+            }
+
+            setTimeout(() => {
+                container.style.display = 'none';
+                document.getElementById('shellSelection').style.display = 'flex';
+            }, 300);
+        }
+
+        function selectShell(shell, shellPrice) {
+            selectedShell = shell;
+            selectedShellPrice = shellPrice;
+
+            const totalPriceDiv = document.getElementById('totalPrice');
+            totalPriceDiv.style.display = 'block';
+            calculateTotalPrice();
+
+            const title = document.getElementById('selectionTitle');
+            title.innerText = '选择轴体';
+
+            const container = document.getElementById('shellSelection');
+            const modules = container.getElementsByClassName('shell-module');
+            for (let i = 0; i < modules.length; i++) {
+                modules[i].classList.toggle('shift-left');
+            }
+
+            setTimeout(() => {
+                container.style.display = 'none';
+                document.getElementById('switchSelection').style.display = 'flex';
+            }, 300);
+        }
+
+        function calculateTotalPrice() {
+            const magneticCount = parseInt(document.getElementById('magneticCount').value) || 0;
+            const magnetKingCount = parseInt(document.getElementById('magnetKingCount').value) || 0;
+
+            const totalSwitchCount = magneticCount + magnetKingCount;
+
+            if (totalSwitchCount > 61) {
+                alert('数量不能超过61个！');
+                return;
+            }
+
+            const totalSwitchPrice = (magneticCount * 5.5) + (magnetKingCount * 5.9);
+            const totalPrice = selectedPrice + selectedShellPrice + totalSwitchPrice;
+
+            document.getElementById('totalPrice').innerText = `总价格: ¥${totalPrice.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

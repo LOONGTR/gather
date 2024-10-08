@@ -29,12 +29,29 @@
         }
 
         header {
+            position: fixed;
+            /* 固定定位 */
+            top: 0;
+            /* 距离视口顶部0 */
+            left: 0;
+            /* 距离视口左边0 */
+            right: 0;
+            /* 距离视口右边0 */
             background-color: rgb(0, 0, 0);
+            /* 背景颜色 */
             padding: 25px;
+            /* 内边距 */
             display: flex;
+            /* Flex布局 */
             justify-content: space-between;
+            /* 空间均匀分配 */
             align-items: center;
+            /* 垂直居中对齐 */
+            z-index: 1000;
+            /* 确保在其他内容之上 */
         }
+
+
 
         .logo {
             font-size: 24px;
@@ -113,21 +130,29 @@
 
         main {
             position: relative;
-            padding: 20px;
+            padding: 100px 20px;
+            /* 为上边距添加一些空间，确保内容不被遮挡 */
         }
 
-.hero {
-    position: absolute; /* 继续使用绝对定位 */
-    top: 22%; /* 可以根据需要调整 */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    z-index: 4; /* 确保在视频上方 */
-    width: 600px; /* 固定宽度 */
-    height: 300px; /* 固定高度 */
-    overflow: hidden; /* 隐藏溢出内容 */
-}
+
+        .hero {
+            position: absolute;
+            /* 继续使用绝对定位 */
+            top: 28%;
+            /* 可以根据需要调整 */
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 4;
+            /* 确保在视频上方 */
+            height: 300px;
+            /* 固定高度 */
+            overflow: hidden;
+            /* 隐藏溢出内容 */
+            flex-grow: 1
+        }
 
         .hero h1 {
             font-size: 48px;
@@ -159,7 +184,6 @@
             gap: 20px;
             /* logo 之间的间距 */
             padding: 20px 0;
-            margin-top: -30px;
         }
 
         .brand-logos img {
@@ -180,8 +204,7 @@
         .info-block {
             background-color: var(--info-bg);
             color: rgb(255, 255, 255);
-            padding: 20px;
-            margin: 20px 0;
+            padding: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             width: 100%;
             position: relative;
@@ -189,6 +212,7 @@
             right: -20px;
             text-align: center;
             z-index: 2;
+            overflow-x: hidden;
         }
 
         .updates-module {
@@ -313,16 +337,13 @@
             /* 设置简介为18px */
         }
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: rgb(17, 17, 17);
-            color: white;
-        }
-
         video {
             width: 100vw;
-            height: auto;
+            /* 宽度占满视口 */
+            height: 100vh;
+            /* 高度占满视口 */
+            overflow: hidden;
+            /* 隐藏超出部分 */
             max-height: 60vh;
             position: relative;
             top: -20px;
@@ -334,6 +355,156 @@
             z-index: 0;
         }
 
+
+        footer {
+            text-align: center;
+            background-color: rgb(17, 17, 17);
+            color: #7e7e7e;
+            font-size: 13px;
+            overflow: hidden;
+            /* 防止内容溢出 */
+            margin: 0 auto;
+            margin-top: 0px;
+            margin-right: auto;
+            margin-bottom: 0px;
+            margin-left: auto;
+            max-width: 100uw;
+            font-weight: 500;
+            /* font-size: 13px; */
+            line-height: 140%;
+        }
+
+
+
+        .download-container {
+            top: -15px;
+            /* 向上移动以重叠 footer */
+            left: 0;
+            /* 左侧对齐 */
+            right: 0;
+            /* 右侧对齐 */
+            background-color: #292929;
+            /* 背景颜色 */
+            padding: 24px;
+            /* 内边距 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            /* 添加阴影效果 */
+        }
+
+        .download-button {
+            display: inline-block;
+            /* 使其表现得像按钮 */
+            padding: 8px 16px;
+            /* 内边距 */
+            background-color: #292929;
+            /* 按钮背景色 */
+            color: #ffffff;
+            /* 按钮文本颜色 */
+            text-decoration: none;
+            /* 去掉下划线 */
+            border-radius: 5px;
+            /* 圆角效果 */
+            font-size: 16px;
+            /* 字体大小 */
+            transition: all 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+        .download-button:hover {
+            background-color: #686868;
+            /* 鼠标悬停时的背景色 */
+        }
+
+        .social-media-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .social-media-container a {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 6px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .social-media-container a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            /* 添加缩放效果 */
+        }
+
+        .social-media-container a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(255, 255, 255);
+            /* 绿色遮罩 */
+            border-radius: 12px;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            /* 默认隐藏遮罩 */
+        }
+
+
+
+        .social-media-container a:hover::before {
+            opacity: 1;
+            /* 鼠标悬停时显示遮罩 */
+        }
+
+        .social-media-container img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            margin: 12px;
+            position: relative;
+            /* 确保图标显示在遮罩之上 */
+            z-index: 1;
+            /* 确保图标在遮罩上层 */
+            filter: brightness(0) invert(1);
+            /* 将图标变为白色 */
+            transition: filter 0.3s ease;
+        }
+
+        .social-media-container a:hover img {
+            filter: brightness(1) invert(0);
+            /* 鼠标悬停时还原图标颜色 */
+        }
+
+        .custom-module {
+            height: 65px;
+            background-color: #292929;
+            padding: 8px 12px;
+            max-width: 500px;
+            margin: 20px auto;
+            /* 上下20px居中对齐 */
+            text-align: center;
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            /* 使图片和文字垂直居中对齐 */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-module p {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-left: 13px;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -358,15 +529,16 @@
         <a href="#">🥇外设排名</a>
         <a href="#">🌊聚浪计划</a>
         <a href="#">🚧项目地址</a>
-        <a href="ez/index.html">⌨ EZ 60/63</a>
-        <a href="wootility/index.html">⌨ wootility</a>
-        <a href="v5/index.html">⌨ wootility V5</a>
+        <a href="/Dirver/ez/index.html">🔥IQUNIX EZ</a>
+        <a href="/Dirver/wootility/index.html">🔥Wootility v4</a>
+        <a href="/Dirver/v5/index.html">🔥Wootility v5</a>
+        <a href="/Mod/index.html">🏪改装商店</a>
         <div class="footer" style="margin-top: auto; text-align: center; font-size: 12px; color: #ccc;">
             © 2024 聚浪版权所有，免费开源禁止售卖
         </div>
     </nav>
 
-    <main>   
+    <main>
         <video autoplay muted loop style="opacity: 0.5;">
             <source
                 src="https://cmsassets.rgpub.io/sanity/files/dsfx7636/news/409ab2fc369ba5e1fe50bac10c6676d7d1365a9f.mp4"
@@ -382,7 +554,8 @@
         <div class="info-block">
             <h2>强大的功能与外观</h2>
             <p>当设备检测到玩家作弊时，将通过鼠标释放出2万伏高压电，强大的功能和惊艳的外观，在游戏中为您带来不一样的体验。</p>
-            <br><h3>合作伙伴</h3>
+            <br>
+            <h3>合作伙伴</h3>
         </div>
 
         <!-- Brand Logos Section -->
@@ -390,6 +563,7 @@
             <img src="img/Tencent-games_logo.png" alt="Tencent game">
             <img src="img/valorant.png" alt="valorant">
             <img src="https://www.okx.com/cdn/assets/imgs/2210/499A92F3657A52EC.png" alt="Mclaren">
+            <img src="img/康师傅.png" alt="Mclaren">
         </div>
 
         <div class="updates-module" id="updates-module">
@@ -399,8 +573,8 @@
                     <img src="https://game.gtimg.cn/images/val/agamezlk/map/bind/cover.PNG" alt="DMA 更新图片">
                     <div>
                         <h3>DMA</h3>
+                        <p class="date">2024-09-21</p>
                         <div class="date-container">
-                            <p class="date">2024-09-21</p>
                         </div>
                         <p>试图通过作弊获取优势，<br>破坏游戏公平性。</p>
                     </div>
@@ -409,8 +583,9 @@
                     <img src="https://game.gtimg.cn/images/val/agamezlk/map/haven/cover.PNG" alt="更新图片">
                     <div>
                         <h3>4000</h3>
+                        <p class="date">2024-09-20</p>
                         <div class="date-container">
-                            <p class="date">2024-09-20</p>
+
                         </div>
                         <p>对于作弊者，终将遭遇惩罚，<br>失去游戏乐趣。</p>
                     </div>
@@ -419,8 +594,9 @@
                     <img src="https://game.gtimg.cn/images/val/agamezlk/map/split/cover.PNG" alt="更新图片">
                     <div>
                         <h3>+</h3>
+                        <p class="date">2024-09-19</p>
                         <div class="date-container">
-                            <p class="date">2024-09-19</p>
+
                         </div>
                         <p>团队的信任被背叛，<br>游戏社区的声誉受损。</p>
                     </div>
@@ -431,7 +607,34 @@
     </main>
 
     <footer>
-        <p>© 2024 聚浪版权所有，免费开源禁止售卖</p>
+        <div class="download-container">
+            <a href="下载链接地址" class="download-button">下载客户端</a>
+        </div>
+
+        <div class="social-media-container">
+            <a href="#"><img
+                    src="https://lf-douyin-pc-web.douyinstatic.com/obj/douyin-pc-web/ies/douyin_web/media/logo-horizontal-small-dark.04fa81ed0b1d6d5e.svg"></a>
+            <a href="#"><img
+                    src="https://files.brandlogos.net/svg/6pHg9QdYGc/Xiaohongshu-OQLB1Y4HE_brandlogos.net.svg"></a>
+            <a href="#"><img
+                    src="https://files.brandlogos.net/svg/PjKl3aKXeF/bilibili-logo-HupLtuv0_brandlogos.net.svg"></a>
+            <a href="#"><img
+                    src="https://brandlogos.net/wp-content/uploads/2016/11/wechat-logo-preview-400x400.png"></a>
+        </div>
+
+
+        <p> 聚浪游戏、《聚浪》及其相关标志皆为 聚浪, Inc.专属之商标、服务商标及注册商标。 © 2020-2024 聚浪, Inc. 版权所有。</p>
+        <p>通过下载，安装和／或将聚浪帐户连接到无畏契约游戏软件，即表示您同意不键不散有限公司的「使用合约」和「隐私权政策」。</p>
+        </div>
+
+        <div class="custom-module">
+            <img
+                src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/435a9db616169333a19b310caaf9f1e57bca9f86-55x55.jpg?&h=100&fit=max">
+            <p>请注意游戏时间，避免沉迷。<br>
+                本游戏为免费使用，此外还提供购买虚拟游戏币、物品等付费服务。<br>
+                本游戏情节涉及暴力及性(轻微裸露)之情节</p>
+        </div>
+
     </footer>
 
     <script>

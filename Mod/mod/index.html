@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选配网站 - MOD 页面</title>
+    <style>
+        body {
+            background-color: rgb(238, 239, 242);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .site-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background-color: white;
+            width: 100%;
+        }
+        .logo-container {
+            width: 40px;
+            height: 40px;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .content {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            align-items: flex-start;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .options {
+            display: flex;
+            flex-direction: row; /* 横向排列 */
+            gap: 15px; /* 选项之间的间距 */
+            margin-top: 10px;
+            width: 100%;
+        }
+        .option-item {
+            font-size: 16px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative; /* 用于绝对定位子选项 */
+        }
+        .sub-options {
+            max-height: 0; /* 初始高度为0 */
+            overflow: hidden; /* 隐藏溢出内容 */
+            transition: max-height 0.5s ease; /* 动画效果 */
+            margin-left: 20px; /* 子选项缩进 */
+            border-left: 2px solid #ccc; /* 左侧边框 */
+            padding-left: 10px; /* 内边距 */
+        }
+        .sub-options.open {
+            max-height: 200px; /* 设置展开后的最大高度 */
+            transition: max-height 0.5s ease; /* 动画效果 */
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="https://wooting.io/wf/612ca8920bc3a648125ffac3/615c6926b8cbb7d336f64d83_Main_Logo_black.svg" alt="Logo" class="logo">
+        </div>
+    </header>
+    
+    <div class="content">
+        <div class="section-title">选择的产品信息</div>
+        <div class="info-box">
+            <div class="model-display" id="displayModel"></div>
+            <div class="price-display" id="displayPrice"></div>
+            <div class="total-price" id="totalPrice"></div>
+        </div>
+
+        <div class="options">
+            <div class="option-item" onclick="toggleSubOptions('shellOptions')">
+                外壳
+            </div>
+            <div class="sub-options" id="shellOptions">
+                <div class="option-item">外壳商品 1</div>
+                <div class="option-item">外壳商品 2</div>
+                <div class="option-item">外壳商品 3</div>
+            </div>
+
+            <div class="option-item" onclick="toggleSubOptions('switchOptions')">
+                轴体
+            </div>
+            <div class="sub-options" id="switchOptions">
+                <div class="option-item">轴体商品 1</div>
+                <div class="option-item">轴体商品 2</div>
+                <div class="option-item">轴体商品 3</div>
+            </div>
+
+            <div class="option-item">声音包</div>
+            <div class="option-item">卫星轴</div>
+            <div class="option-item">键帽</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const model = localStorage.getItem('selectedModel');
+            const price = parseFloat(localStorage.getItem('selectedPrice'));
+
+            console.log(`从localStorage获取: 型号: ${model}, 价格: ¥${price}`); // 调试信息
+
+            if (model && !isNaN(price)) {
+                document.getElementById('displayModel').innerText = `选定型号: ${model}`;
+                document.getElementById('displayPrice').innerText = `选定价格: ¥${price.toFixed(2)}`;
+                document.getElementById('totalPrice').innerText = `总价: ¥${price.toFixed(2)}`;
+            } else {
+                document.getElementById('displayModel').innerText = '未选择产品型号';
+                document.getElementById('displayPrice').innerText = '未选择产品价格';
+                document.getElementById('totalPrice').innerText = '总价: ¥0.00';
+            }
+        });
+
+        function toggleSubOptions(id) {
+            const subOptions = document.getElementById(id);
+            subOptions.classList.toggle('open'); // 切换类名以控制展开状态
+        }
+    </script>
+</body>
+</html>
