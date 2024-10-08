@@ -92,6 +92,79 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        .back-button {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="number"]:hover, input[type="range"]:hover {
+            border-color: #66b3ff;
+        }
+
+        input[type="number"]:focus, input[type="range"]:focus {
+            border-color: #66b3ff;
+            box-shadow: 0 0 5px rgba(102, 179, 255, 0.5);
+            outline: none;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: flex;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .close {
+            cursor: pointer;
+            float: right;
+        }
+
+        .selected-product {
+            display: flex;
+            flex-direction: column; /* 每个商品单独一行 */
+            align-items: flex-start; /* 对齐到左侧 */
+            gap: 10px; /* 商品之间的间距 */
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between; /* 商品和价格在同一行 */
+            width: 100%; /* 使用整个宽度 */
+        }
     </style>
 </head>
 <body>
@@ -123,7 +196,11 @@
         </div>
     </div>
 
-    <div id="selectedProduct" class="bubble" style="display: none;"></div>
+    <div id="selectedProduct" class="bubble" style="display: none;">
+        <h3>已选择产品</h3>
+        <div class="selected-product" id="selectedDetails"></div>
+    </div>
+    
     <div class="shell-container" id="shellSelection" style="display: none;">
         <div class="shell-module" onclick="selectShell('Aim60', 529.00)">
             <img src="https://via.placeholder.com/400x200?text=Aim60" alt="Aim60" class="shell-image">
@@ -145,36 +222,57 @@
     </div>
 
     <div class="switch-container" id="switchSelection" style="display: none;">
-        <div class="switch-module">
+        <div class="switch-module" onclick="showQuantityModal('磁玉轴', 5.50)">
             <img src="https://via.placeholder.com/400x200?text=%E7%A3%81%E9%BB%84%E8%BD%B4" alt="磁玉轴" class="switch-image">
             <div class="switch-description">磁玉轴</div>
-            <input type="number" id="magneticCount" value="0" min="0" max="61" onchange="calculateTotalPrice()">
             <div class="switch-price">价格: ¥5.50/颗</div>
         </div>
 
-        <div class="switch-module">
+        <div class="switch-module" onclick="showQuantityModal('万磁王轴', 5.90)">
             <img src="https://via.placeholder.com/400x200?text=%E4%B8%87%E7%A3%81%E7%8E%8B%E8%BD%B4" alt="万磁王轴" class="switch-image">
             <div class="switch-description">万磁王轴</div>
-            <input type="number" id="magnetKingCount" value="0" min="0" max="61" onchange="calculateTotalPrice()">
+            <div class="switch-price">价格: ¥5.90/颗</div>
+        </div>
+
+        <div class="switch-module" onclick="showQuantityModal('红轴', 5.90)">
+            <img src="https://via.placeholder.com/400x200?text=%E7%BA%A2%E8%BD%B4" alt="红轴" class="switch-image">
+            <div class="switch-description">红轴</div>
             <div class="switch-price">价格: ¥5.90/颗</div>
         </div>
     </div>
 
     <div class="total-price" id="totalPrice" style="display: none;">总价格: ¥0.00</div>
 
+    <button class="back-button" id="backButton" style="display: none;" onclick="goBack()">返回</button>
+
+    <!-- Modal for Quantity Selection -->
+    <div id="quantityModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>选择数量</h2>
+            <input type="range" id="switchQuantity" min="1" max="61" value="1" onchange="updateQuantityDisplay()">
+            <p>选择的数量: <span id="quantityDisplay">1</span></p>
+            <button onclick="confirmQuantity()">确认</button>
+        </div>
+    </div>
+
     <script>
         let selectedModel = '';
         let selectedPrice = 0;
         let selectedShell = '';
         let selectedShellPrice = 0;
+        let selectedSwitch = '';
+        let selectedSwitchPrice = 0;
+        let switchCount = 1;
+        let step = 0; // 用于记录步骤
 
         function selectProduct(model, price) {
-            console.log(`选择的型号: ${model}, 价格: ¥${price}`);
             selectedModel = model;
             selectedPrice = price;
 
             const selectedDisplay = document.getElementById('selectedProduct');
-            selectedDisplay.innerHTML = `<h3>已选择产品</h3><p>型号: ${model}</p><p>价格: ¥${price}</p>`;
+            const selectedDetails = document.getElementById('selectedDetails');
+            selectedDetails.innerHTML = `<div class="product-item"><span>型号: ${model}</span><span>价格: ¥${price}</span></div>`;
             selectedDisplay.style.display = 'block';
 
             const title = document.getElementById('selectionTitle');
@@ -189,6 +287,8 @@
             setTimeout(() => {
                 container.style.display = 'none';
                 document.getElementById('shellSelection').style.display = 'flex';
+                step = 1; // 更新步骤
+                document.getElementById('backButton').style.display = 'block'; // 显示返回按钮
             }, 300);
         }
 
@@ -196,6 +296,10 @@
             selectedShell = shell;
             selectedShellPrice = shellPrice;
 
+            const selectedDisplay = document.getElementById('selectedProduct');
+            const selectedDetails = document.getElementById('selectedDetails');
+            selectedDetails.innerHTML += `<div class="product-item"><span>外壳: ${shell}</span><span>价格: ¥${shellPrice}</span></div>`;
+            
             const totalPriceDiv = document.getElementById('totalPrice');
             totalPriceDiv.style.display = 'block';
             calculateTotalPrice();
@@ -212,24 +316,73 @@
             setTimeout(() => {
                 container.style.display = 'none';
                 document.getElementById('switchSelection').style.display = 'flex';
+                step = 2; // 更新步骤
             }, 300);
         }
 
+        function showQuantityModal(switchName, switchPrice) {
+            selectedSwitch = switchName;
+            selectedSwitchPrice = switchPrice;
+            document.getElementById('quantityModal').style.display = 'flex';
+            updateQuantityDisplay();
+        }
+
+        function closeModal() {
+            document.getElementById('quantityModal').style.display = 'none';
+        }
+
+        function updateQuantityDisplay() {
+            switchCount = document.getElementById('switchQuantity').value;
+            document.getElementById('quantityDisplay').innerText = switchCount;
+        }
+
+        function confirmQuantity() {
+            closeModal();
+            const selectedDisplay = document.getElementById('selectedProduct');
+            const selectedDetails = document.getElementById('selectedDetails');
+            selectedDetails.innerHTML += `<div class="product-item"><span>轴体: ${selectedSwitch} (${switchCount}颗)</span><span>价格: ¥${(selectedSwitchPrice * switchCount).toFixed(2)}</span></div>`;
+            calculateTotalPrice();
+        }
+
         function calculateTotalPrice() {
-            const magneticCount = parseInt(document.getElementById('magneticCount').value) || 0;
-            const magnetKingCount = parseInt(document.getElementById('magnetKingCount').value) || 0;
-
-            const totalSwitchCount = magneticCount + magnetKingCount;
-
-            if (totalSwitchCount > 61) {
-                alert('数量不能超过61个！');
-                return;
-            }
-
-            const totalSwitchPrice = (magneticCount * 5.5) + (magnetKingCount * 5.9);
+            const totalSwitchPrice = (selectedSwitchPrice * switchCount);
             const totalPrice = selectedPrice + selectedShellPrice + totalSwitchPrice;
 
             document.getElementById('totalPrice').innerText = `总价格: ¥${totalPrice.toFixed(2)}`;
+        }
+
+        function goBack() {
+            if (step === 1) {
+                // 返回到选择产品
+                document.getElementById('shellSelection').style.display = 'none';
+                document.getElementById('productContainer').style.display = 'flex';
+                document.getElementById('backButton').style.display = 'none'; // 隐藏返回按钮
+                const title = document.getElementById('selectionTitle');
+                title.innerText = '选择键盘';
+                
+                // 清除已选择外壳信息
+                selectedShell = '';
+                selectedShellPrice = 0;
+                const selectedDisplay = document.getElementById('selectedProduct');
+                const selectedDetails = document.getElementById('selectedDetails');
+                selectedDetails.innerHTML = `<div class="product-item"><span>型号: ${selectedModel}</span><span>价格: ¥${selectedPrice}</span></div>`;
+                calculateTotalPrice(); // 更新总价格
+            } else if (step === 2) {
+                // 返回到选择轴体
+                document.getElementById('switchSelection').style.display = 'none';
+                document.getElementById('shellSelection').style.display = 'flex';
+                const title = document.getElementById('selectionTitle');
+                title.innerText = '选择外壳';
+
+                // 清除已选择轴体信息
+                selectedSwitch = '';
+                selectedSwitchPrice = 0;
+                switchCount = 1; // 重置数量
+                const selectedDisplay = document.getElementById('selectedProduct');
+                selectedDetails.innerHTML = selectedDetails.innerHTML.split('<div class="product-item">')[0]; // 移除轴体信息
+                calculateTotalPrice(); // 更新总价格
+            }
+            step--; // 更新步骤
         }
     </script>
 </body>

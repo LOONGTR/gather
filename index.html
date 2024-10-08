@@ -138,7 +138,7 @@
         .hero {
             position: absolute;
             /* 继续使用绝对定位 */
-            top: 28%;
+            top: 24%;
             /* 可以根据需要调整 */
             left: 50%;
             width: 100%;
@@ -470,8 +470,6 @@
             position: relative;
             /* 确保图标显示在遮罩之上 */
             z-index: 1;
-            /* 确保图标在遮罩上层 */
-            filter: brightness(0) invert(1);
             /* 将图标变为白色 */
             transition: filter 0.3s ease;
         }
@@ -529,10 +527,10 @@
         <a href="#">🥇外设排名</a>
         <a href="#">🌊聚浪计划</a>
         <a href="#">🚧项目地址</a>
-        <a href="./Dirver/ez/index.html">🔥IQUNIX EZ</a>
-        <a href="./Dirver/wootility/index.html">🔥Wootility v4</a>
-        <a href="./Dirver/v5/index.html">🔥Wootility v5</a>
-        <a href="./Mod/index.html">🏪改装商店</a>
+        <a href="./Dirver/ez">🔥IQUNIX EZ</a>
+        <a href="./Dirver/wootility">🔥Wootility v4</a>
+        <a href="./Dirver/v5">🔥Wootility v5</a>
+        <a href="./Mod">🏪改装商店</a>
         <div class="footer" style="margin-top: auto; text-align: center; font-size: 12px; color: #ccc;">
             © 2024 聚浪版权所有，免费开源禁止售卖
         </div>
@@ -646,7 +644,7 @@
         }
 
         const bgm = document.getElementById('bgm');
-        bgm.volume = 0.08; // 设置音量为 20%
+        bgm.volume = 0; // 设置音量为 20%
     </script>
 </body>
 
