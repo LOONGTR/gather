@@ -6,9 +6,30 @@
     <title>选配网站</title>
     <style>
         body {
-            background-color: rgb(238, 239, 242);
+            background-color: rgb(18, 18, 18); /* 设置背景颜色 */
             margin: 0;
             font-family: Arial, sans-serif;
+            overflow: hidden; /* 防止滚动 */
+        }
+
+        .welcome-message {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            color: #007bff;
+            opacity: 0;
+            animation: fadeInOut 3s infinite;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
 
         .site-header {
@@ -50,6 +71,10 @@
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
+        .product-module:hover, .shell-module:hover, .switch-module:hover {
+            transform: scale(1.05);
+        }
+
         .product-image, .shell-image, .switch-image {
             width: 100%;
             height: 200px;
@@ -71,11 +96,6 @@
             font-size: 24px;
             font-weight: bold;
             text-align: left;
-        }
-
-        .shift-left {
-            transform: translateX(-20px);
-            opacity: 0.5;
         }
 
         .bubble {
@@ -127,7 +147,6 @@
             outline: none;
         }
 
-        /* Modal styles */
         .modal {
             display: flex;
             position: fixed;
@@ -155,19 +174,36 @@
 
         .selected-product {
             display: flex;
-            flex-direction: column; /* 每个商品单独一行 */
-            align-items: flex-start; /* 对齐到左侧 */
-            gap: 10px; /* 商品之间的间距 */
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
         .product-item {
             display: flex;
-            justify-content: space-between; /* 商品和价格在同一行 */
-            width: 100%; /* 使用整个宽度 */
+            justify-content: space-between;
+            width: 100%;
+            text-align: center;
+        }
+
+        .remove-button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+
+        .remove-button:hover {
+            background-color: #ff1a1a;
         }
     </style>
 </head>
 <body>
+    <div id="welcomeMessage" class="welcome-message">Wooting 不改等于白买</div>
+    
     <header class="site-header">
         <div class="logo-container">
             <img src="https://wooting.io/wf/612ca8920bc3a648125ffac3/615c6926b8cbb7d336f64d83_Main_Logo_black.svg" alt="Logo" class="logo">
@@ -215,175 +251,112 @@
         </div>
 
         <div class="shell-module" onclick="selectShell('金龙浮雕外壳', 999.00)">
-            <img src="https://via.placeholder.com/400x200?text=%E9%87%91%E9%BE%99%E6%B5%AE%E9%9C%B2%E5%A4%96%E5%A3%B3" alt="金龙浮雕外壳" class="shell-image">
+            <img src="https://via.placeholder.com/400x200?text=%E9%87%91%E9%BE%99%E6%B5%AE%E9%9B%95%E5%A4%96%E5%A3%B3" alt="金龙浮雕外壳" class="shell-image">
             <div class="shell-description">金龙浮雕外壳</div>
             <div class="shell-price">价格: ¥999.00</div>
         </div>
     </div>
 
     <div class="switch-container" id="switchSelection" style="display: none;">
-        <div class="switch-module" onclick="showQuantityModal('磁玉轴', 5.50)">
-            <img src="https://via.placeholder.com/400x200?text=%E7%A3%81%E9%BB%84%E8%BD%B4" alt="磁玉轴" class="switch-image">
-            <div class="switch-description">磁玉轴</div>
-            <div class="switch-price">价格: ¥5.50/颗</div>
+        <div class="switch-module" onclick="selectSwitch('青轴', 200.00)">
+            <img src="https://via.placeholder.com/400x200?text=%E9%9D%92%E8%BD%B4" alt="青轴" class="switch-image">
+            <div class="switch-description">青轴</div>
+            <div class="switch-price">价格: ¥200.00</div>
         </div>
 
-        <div class="switch-module" onclick="showQuantityModal('万磁王轴', 5.90)">
-            <img src="https://via.placeholder.com/400x200?text=%E4%B8%87%E7%A3%81%E7%8E%8B%E8%BD%B4" alt="万磁王轴" class="switch-image">
-            <div class="switch-description">万磁王轴</div>
-            <div class="switch-price">价格: ¥5.90/颗</div>
-        </div>
-
-        <div class="switch-module" onclick="showQuantityModal('红轴', 5.90)">
+        <div class="switch-module" onclick="selectSwitch('红轴', 200.00)">
             <img src="https://via.placeholder.com/400x200?text=%E7%BA%A2%E8%BD%B4" alt="红轴" class="switch-image">
             <div class="switch-description">红轴</div>
-            <div class="switch-price">价格: ¥5.90/颗</div>
+            <div class="switch-price">价格: ¥200.00</div>
+        </div>
+
+        <div class="switch-module" onclick="selectSwitch('茶轴', 200.00)">
+            <img src="https://via.placeholder.com/400x200?text=%E8%8C%B6%E8%BD%B4" alt="茶轴" class="switch-image">
+            <div class="switch-description">茶轴</div>
+            <div class="switch-price">价格: ¥200.00</div>
         </div>
     </div>
 
-    <div class="total-price" id="totalPrice" style="display: none;">总价格: ¥0.00</div>
+    <div class="total-price" id="totalPrice">总价: ¥0.00</div>
 
-    <button class="back-button" id="backButton" style="display: none;" onclick="goBack()">返回</button>
-
-    <!-- Modal for Quantity Selection -->
-    <div id="quantityModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>选择数量</h2>
-            <input type="range" id="switchQuantity" min="1" max="61" value="1" onchange="updateQuantityDisplay()">
-            <p>选择的数量: <span id="quantityDisplay">1</span></p>
-            <button onclick="confirmQuantity()">确认</button>
-        </div>
-    </div>
+    <button class="back-button" onclick="goBack()">返回选择</button>
 
     <script>
-        let selectedModel = '';
-        let selectedPrice = 0;
-        let selectedShell = '';
-        let selectedShellPrice = 0;
-        let selectedSwitch = '';
-        let selectedSwitchPrice = 0;
-        let switchCount = 1;
-        let step = 0; // 用于记录步骤
+        let totalCost = 0;
+        const selectedProducts = [];
 
-        function selectProduct(model, price) {
-            selectedModel = model;
-            selectedPrice = price;
+        function selectProduct(productName, price) {
+            selectedProducts.push({ name: productName, price: price });
+            totalCost += price;
+            updateSelection();
+            document.getElementById('shellSelection').style.display = 'flex';
+            document.getElementById('selectionTitle').innerText = '选择外壳';
+        }
 
-            const selectedDisplay = document.getElementById('selectedProduct');
+        function selectShell(shellName, price) {
+            selectedProducts.push({ name: shellName, price: price });
+            totalCost += price;
+            updateSelection();
+            document.getElementById('switchSelection').style.display = 'flex';
+            document.getElementById('selectionTitle').innerText = '选择开关';
+        }
+
+        function selectSwitch(switchName, price) {
+            selectedProducts.push({ name: switchName, price: price });
+            totalCost += price;
+            updateSelection();
+            document.getElementById('totalPrice').innerText = `总价: ¥${totalCost.toFixed(2)}`;
+        }
+
+        function updateSelection() {
             const selectedDetails = document.getElementById('selectedDetails');
-            selectedDetails.innerHTML = `<div class="product-item"><span>型号: ${model}</span><span>价格: ¥${price}</span></div>`;
-            selectedDisplay.style.display = 'block';
+            selectedDetails.innerHTML = '';
+            selectedProducts.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `${product.name} - ¥${product.price.toFixed(2)}<button class="remove-button" onclick="removeProduct('${product.name}')">移除</button>`;
+                selectedDetails.appendChild(productItem);
+            });
+            document.getElementById('selectedProduct').style.display = 'block';
+        }
 
-            const title = document.getElementById('selectionTitle');
-            title.innerText = '选择外壳';
-
-            const container = document.getElementById('productContainer');
-            const modules = container.getElementsByClassName('product-module');
-            for (let i = 0; i < modules.length; i++) {
-                modules[i].classList.toggle('shift-left');
+        function removeProduct(productName) {
+            const productIndex = selectedProducts.findIndex(product => product.name === productName);
+            if (productIndex > -1) {
+                totalCost -= selectedProducts[productIndex].price;
+                selectedProducts.splice(productIndex, 1);
+                updateSelection();
+                document.getElementById('totalPrice').innerText = `总价: ¥${totalCost.toFixed(2)}`;
             }
-
-            setTimeout(() => {
-                container.style.display = 'none';
-                document.getElementById('shellSelection').style.display = 'flex';
-                step = 1; // 更新步骤
-                document.getElementById('backButton').style.display = 'block'; // 显示返回按钮
-            }, 300);
-        }
-
-        function selectShell(shell, shellPrice) {
-            selectedShell = shell;
-            selectedShellPrice = shellPrice;
-
-            const selectedDisplay = document.getElementById('selectedProduct');
-            const selectedDetails = document.getElementById('selectedDetails');
-            selectedDetails.innerHTML += `<div class="product-item"><span>外壳: ${shell}</span><span>价格: ¥${shellPrice}</span></div>`;
-            
-            const totalPriceDiv = document.getElementById('totalPrice');
-            totalPriceDiv.style.display = 'block';
-            calculateTotalPrice();
-
-            const title = document.getElementById('selectionTitle');
-            title.innerText = '选择轴体';
-
-            const container = document.getElementById('shellSelection');
-            const modules = container.getElementsByClassName('shell-module');
-            for (let i = 0; i < modules.length; i++) {
-                modules[i].classList.toggle('shift-left');
-            }
-
-            setTimeout(() => {
-                container.style.display = 'none';
-                document.getElementById('switchSelection').style.display = 'flex';
-                step = 2; // 更新步骤
-            }, 300);
-        }
-
-        function showQuantityModal(switchName, switchPrice) {
-            selectedSwitch = switchName;
-            selectedSwitchPrice = switchPrice;
-            document.getElementById('quantityModal').style.display = 'flex';
-            updateQuantityDisplay();
-        }
-
-        function closeModal() {
-            document.getElementById('quantityModal').style.display = 'none';
-        }
-
-        function updateQuantityDisplay() {
-            switchCount = document.getElementById('switchQuantity').value;
-            document.getElementById('quantityDisplay').innerText = switchCount;
-        }
-
-        function confirmQuantity() {
-            closeModal();
-            const selectedDisplay = document.getElementById('selectedProduct');
-            const selectedDetails = document.getElementById('selectedDetails');
-            selectedDetails.innerHTML += `<div class="product-item"><span>轴体: ${selectedSwitch} (${switchCount}颗)</span><span>价格: ¥${(selectedSwitchPrice * switchCount).toFixed(2)}</span></div>`;
-            calculateTotalPrice();
-        }
-
-        function calculateTotalPrice() {
-            const totalSwitchPrice = (selectedSwitchPrice * switchCount);
-            const totalPrice = selectedPrice + selectedShellPrice + totalSwitchPrice;
-
-            document.getElementById('totalPrice').innerText = `总价格: ¥${totalPrice.toFixed(2)}`;
         }
 
         function goBack() {
-            if (step === 1) {
-                // 返回到选择产品
-                document.getElementById('shellSelection').style.display = 'none';
-                document.getElementById('productContainer').style.display = 'flex';
-                document.getElementById('backButton').style.display = 'none'; // 隐藏返回按钮
-                const title = document.getElementById('selectionTitle');
-                title.innerText = '选择键盘';
-                
-                // 清除已选择外壳信息
-                selectedShell = '';
-                selectedShellPrice = 0;
-                const selectedDisplay = document.getElementById('selectedProduct');
-                const selectedDetails = document.getElementById('selectedDetails');
-                selectedDetails.innerHTML = `<div class="product-item"><span>型号: ${selectedModel}</span><span>价格: ¥${selectedPrice}</span></div>`;
-                calculateTotalPrice(); // 更新总价格
-            } else if (step === 2) {
-                // 返回到选择轴体
-                document.getElementById('switchSelection').style.display = 'none';
-                document.getElementById('shellSelection').style.display = 'flex';
-                const title = document.getElementById('selectionTitle');
-                title.innerText = '选择外壳';
-
-                // 清除已选择轴体信息
-                selectedSwitch = '';
-                selectedSwitchPrice = 0;
-                switchCount = 1; // 重置数量
-                const selectedDisplay = document.getElementById('selectedProduct');
-                selectedDetails.innerHTML = selectedDetails.innerHTML.split('<div class="product-item">')[0]; // 移除轴体信息
-                calculateTotalPrice(); // 更新总价格
+            if (selectedProducts.length > 0) {
+                selectedProducts.pop();
+                totalCost = 0;
+                selectedProducts.forEach(product => totalCost += product.price);
+                updateSelection();
+                document.getElementById('totalPrice').innerText = `总价: ¥${totalCost.toFixed(2)}`;
             }
-            step--; // 更新步骤
+
+            if (selectedProducts.length === 0) {
+                document.getElementById('shellSelection').style.display = 'none';
+                document.getElementById('switchSelection').style.display = 'none';
+                document.getElementById('productContainer').style.display = 'flex';
+                document.getElementById('selectionTitle').innerText = '选择键盘';
+                document.getElementById('selectedProduct').style.display = 'none';
+            } else if (selectedProducts.length === 1) {
+                document.getElementById('shellSelection').style.display = 'none';
+                document.getElementById('switchSelection').style.display = 'none';
+                document.getElementById('productContainer').style.display = 'flex';
+            }
         }
+
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('welcomeMessage').style.display = 'none';
+            }, 5000);
+        };
     </script>
 </body>
 </html>

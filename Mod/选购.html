@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单网站</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(18, 18, 18);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            height: 60px;
+            padding: 16px 32px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+
+        .content-container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: var(--chakra-sizes-full);
+            height: var(--chakra-sizes-full);
+            padding-inline-start: var(--chakra-space-8);
+            padding-inline-end: var(--chakra-space-8);
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.5;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ffd45c;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffc24f;
+        }
+
+        .svg-wrapper {
+            width: 100%;
+            position: relative;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .overlay-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            z-index: 1;
+            animation: moveAndBlurContainer 5s ease-in-out infinite;
+        }
+
+        .color-layer {
+            position: absolute;
+            top: 3px;
+            right: 5px;
+            width: 96%;
+            height: 95%;
+            background-image: repeating-linear-gradient(270deg, red, orange, yellow, green, blue, purple, red, orange, yellow, green, blue, purple, red);
+            background-size: 400% 100%;
+            animation: leftToRightWave 10s linear infinite reverse;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            z-index: 1;
+        }
+
+        .overlay-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .keys-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        @keyframes leftToRightWave {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 400% 0%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .overlay-container {
+                position: relative;
+                width: 80%;
+                max-width: 800px;
+                z-index: 2;
+            }
+        }
+
+        .spacer {
+            min-height: 650px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .spacer-text {
+            font-size: 72px;
+            color: rgb(255, 212, 92);
+            margin: 10px 0;
+            font-family: 'Arial Black', Arial, sans-serif;
+            white-space: nowrap;
+            position: relative;
+            animation: moveAndBlur 10s linear infinite; /* 匀速无限循环 */
+        }
+
+        @keyframes moveAndBlur {
+            0% {
+                transform: translateX(-100vw); /* 从屏幕左侧外部开始 */
+                filter: blur(10px);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            50% {
+                filter: blur(0); /* 中间位置时清晰 */
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            100% {
+                transform: translateX(100vw); /* 移动到屏幕右侧外部 */
+                filter: blur(10px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveAndBlurContainer {
+            0% {
+                transform: translateX(-100%);
+                filter: blur(10px);
+                opacity: 0;
+            }
+
+            50% {
+                filter: blur(5px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-text">聚浪</div>
+    </header>
+
+    <!-- Spacer div with text -->
+    <div class="spacer">
+        <h1 class="spacer-text">浪LOONGTR</h1>
+        <h1 class="spacer-text">浪LOONGTR</h1>
+    </div>
+
+    <div class="content-container">
+        <h1>欢迎来到浪Go</h1>
+        <p>在这里您可以迅速配置您的Wooting设备，尝试一些与众不同的设定，并按您的喜好个性化定制您的设备。当完成配置之后，后台都不用留，只需要保存、关闭、享受即可。</p>
+        <button onclick="window.location.href='https://www.wooting.io';">前往 Wooting</button>
+
+        <div class="svg-wrapper">
+            <div class="overlay-container">
+                <div class="color-layer"></div>
+                <img src="https://wootility.io/images/devices/60HE/case.webp" alt="Overlay Image" class="overlay-image">
+                <img src="https://wootility.io/images/devices/60HE/keys.webp" alt="Keys Image" class="keys-image">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

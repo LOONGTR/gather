@@ -69,7 +69,42 @@
             background: transparent;
             border: none;
             padding: 0;
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
         }
+
+        .menu-button:hover {
+            transform: scale(1.1);
+            /* 鼠标悬停时放大 */
+        }
+
+        .menu-button::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            /* 向上移动背景 */
+            left: -10px;
+            /* 向左移动背景 */
+            right: -10px;
+            /* 向右扩展背景 */
+            bottom: -10px;
+            /* 向下移动背景 */
+            background-color: rgba(255, 255, 255, 0.3);
+            /* 调整为更明显的半透明灰色 */
+            border-radius: 8px;
+            /* 增加圆角效果 */
+            opacity: 0;
+            /* 默认隐藏 */
+            transition: opacity 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+        .menu-button:hover::after {
+            opacity: 1;
+            /* 鼠标悬停时显示背景 */
+        }
+
+
 
         .menu-button div {
             width: 100%;
@@ -173,6 +208,14 @@
             border-radius: 5px;
             font-size: 18px;
             margin-top: 10px;
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+
+        .hero .button:hover {
+            transform: scale(1.1);
+            /* 鼠标悬停时放大 */
         }
 
         .brand-logos {
@@ -392,28 +435,49 @@
         }
 
         .download-button {
+            position: relative;
+            /* 添加相对定位 */
             display: inline-block;
-            /* 使其表现得像按钮 */
             padding: 8px 16px;
-            /* 内边距 */
             background-color: #292929;
-            /* 按钮背景色 */
             color: #ffffff;
-            /* 按钮文本颜色 */
             text-decoration: none;
-            /* 去掉下划线 */
             border-radius: 5px;
-            /* 圆角效果 */
             font-size: 16px;
-            /* 字体大小 */
             transition: all 0.3s ease;
+        }
+
+        .download-button::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            /* 向上移动背景 */
+            left: -10px;
+            /* 向左移动背景 */
+            right: -10px;
+            /* 向右扩展背景 */
+            bottom: -10px;
+            /* 向下移动背景 */
+            background-color: rgba(255, 255, 255, 0.3);
+            /* 半透明的灰色背景 */
+            border-radius: 8px;
+            /* 圆角效果 */
+            opacity: 0;
+            /* 默认隐藏 */
+            transition: opacity 0.3s ease;
             /* 添加过渡效果 */
         }
 
-        .download-button:hover {
-            background-color: #686868;
-            /* 鼠标悬停时的背景色 */
+        .download-button:hover::after {
+            opacity: 1;
+            /* 鼠标悬停时显示背景 */
         }
+
+        .download-button:hover {
+            transform: scale(1.05);
+            /* 悬停时放大效果 */
+        }
+
 
         .social-media-container {
             display: flex;
@@ -503,6 +567,26 @@
             margin-left: 13px;
             text-align: left;
         }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            /* 隐藏溢出 */
+            white-space: nowrap;
+            /* 不换行 */
+            animation: typing 2s steps(40, end) forwards;
+            /* 动画持续时间和步数 */
+        }
     </style>
 </head>
 
@@ -544,17 +628,21 @@
             您的浏览器不支持视频标签。
         </video>
         <div class="hero">
-            <h1>聚浪-全新客户端</h1>
+            <h1>🌊聚浪-全新客户端</h1>
             <p>体验前所未有的速度和功能。</p>
             <a href="#" class="button">了解更多</a>
         </div>
 
         <div class="info-block">
             <h2>强大的功能与外观</h2>
-            <p>当设备检测到玩家作弊时，将通过鼠标释放出2万伏高压电，强大的功能和惊艳的外观，在游戏中为您带来不一样的体验。</p>
-            <br>
+        </div>
+
+        <p id="dynamic-text" class="typing-effect"></p>
+
+        <div class="info-block">
             <h3>合作伙伴</h3>
         </div>
+
 
         <!-- Brand Logos Section -->
         <div class="brand-logos">
@@ -645,6 +733,26 @@
 
         const bgm = document.getElementById('bgm');
         bgm.volume = 0; // 设置音量为 20%
+
+        const text = "当设备检测到玩家作弊时，将通过鼠标释放出2万伏高压电，强大的功能和惊艳的外观，在游戏中为您带来不一样的体验。";
+        const typingEffectContainer = document.createElement('div');
+        typingEffectContainer.className = 'typing-effect';
+        document.querySelector('.info-block').appendChild(typingEffectContainer);
+
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typingEffectContainer.textContent += text.charAt(index);
+                index++;
+                const randomDelay = Math.floor(Math.random() * 30) + 2; // 随机延迟在50到200毫秒之间
+                setTimeout(type, randomDelay);
+            }
+        }
+
+        type();
+
+
     </script>
 </body>
 
