@@ -103,7 +103,7 @@
             width: 100%;
             max-width: 900px;
             top: 45px;
-            z-index: 4;
+            z-index: 4; /* Keeps overlay-container on top */
             animation: moveAndBlurContainer 2s ease-in-out;
             animation-iteration-count: 1;
         }
@@ -160,7 +160,7 @@
             height: 480px;
             background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 40%, transparent 60%);
             border-radius: 60%;
-            z-index: 1;
+            z-index: 2; /* This will be in between the banners and overlay-container */
             opacity: 0;
             animation: haloAppear 3s ease forwards;
             animation-delay: 2s;
@@ -212,34 +212,10 @@
             }
         }
 
-        /* 新的MarqueeBanner容器 */
-        .MarqueeBanner {
-            position: relative;
-            width: 100%;
-            height: auto;
-            display: flex;
-            justify-content: space-between;
-            z-index: 3; /* 确保MarqueeBanner低于overlay-container */
-            overflow: hidden;
-            padding: 50px 0;
-            flex-direction: column; /* 垂直排列两行 */
-        }
-
-        .MarqueeBanner .line {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        .left-bottom-text,
-        .right-top-text {
+        .bottom-text {
             animation: moveAndBlur 10s linear infinite;
-        }
-
-        /* 调整左下文字样式 */
-        .left-bottom-text {
             margin-right: 30px;
+            width: 100%;
         }
 
         .spacer-text {
@@ -297,6 +273,80 @@
                 filter: blur(0);
             }
         }
+
+        /* MarqueeBanner with lower z-index */
+        .MarqueeBanner {
+            position: absolute;
+            left: 0;
+            width: 50%;
+            height: auto;
+            display: flex;
+            justify-content: flex-start;
+            z-index: 1; /* Lower z-index for both banners */
+            overflow: hidden;
+            padding: 50px 0;
+            flex-direction: column;
+            padding: 480px 0;
+        }
+
+        .MarqueeBanner-right {
+            position: absolute;
+            right: 0;
+            width: 50%;
+            height: auto;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1; /* Matching z-index with left banner */
+            overflow: hidden;
+            padding: 50px 0;
+            flex-direction: column;
+            padding: 420px 0;
+        }
+
+        .bottom-text-right {
+            animation: moveAndBlurRight 10s linear infinite;
+            margin-left: 30px;
+            width: 100%;
+        }
+
+        .spacer-text-right {
+            font-size: 55px;
+            color: rgb(255, 212, 92);
+            margin: 10px 0;
+            font-family: 'Arial Black', Arial, sans-serif;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        /* 右侧文本向右移动的动画 */
+        @keyframes moveAndBlurRight {
+            0% {
+                transform: translateX(-100vw);
+                filter: blur(10px);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            50% {
+                filter: blur(0);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            100% {
+                transform: translateX(100vw);
+                filter: blur(10px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -325,14 +375,18 @@
 
         <!-- MarqueeBanner 容器，包含一行左右移动的文本 -->
         <div class="MarqueeBanner">
-            <!-- 一行有一句文本 -->
-            <div class="line">
-                <div class="left-bottom-text">
-                    <h1 class="spacer-text">WOOTING不改等于白买</h1>
-                </div>
+            <!-- 第一行有一句文本 -->
+            <div class="bottom-text">
+                <h1 class="spacer-text">WOOTING不改等于白买</h1>
             </div>
         </div>
-
+    </div>
+    <!-- 右边的MarqueeBanner 容器，包含一行左右移动的文本 -->
+    <div class="MarqueeBanner-right">
+        <div class="bottom-text-right">
+            <h1 class="spacer-text-right">WOOTING不改等于白买</h1>
+        </div>
+    </div>
     </div>
 
 </body>

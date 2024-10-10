@@ -44,19 +44,6 @@
             font-family: 'Arial Black', Arial, sans-serif;
         }
 
-        .content-container {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            width: var(--chakra-sizes-full);
-            height: var(--chakra-sizes-full);
-            padding-inline-start: var(--chakra-space-8);
-            padding-inline-end: var(--chakra-space-8);
-            position: absolute;
-            top: 60px;
-            z-index: 2;
-        }
-
         h1 {
             font-size: 48px;
             margin: 20px 0;
@@ -85,31 +72,46 @@
             background-color: #ffc24f;
         }
 
-        .svg-wrapper {
-            width: 100%;
+        .spacer {
             position: relative;
-            margin-top: 50px;
+            width: 100%;
+            min-height: 650px;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
-            gap: 20px;
+            margin-top: 0;
+            z-index: 1;
+        }
+
+        /* Content Container */
+        .content-container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+            padding-inline-start: var(--chakra-space-8);
+            padding-inline-end: var(--chakra-space-8);
+            position: relative;
             z-index: 3;
         }
 
+        /* Overlay Container */
         .overlay-container {
             position: relative;
             width: 100%;
             max-width: 900px;
             top: 45px;
-            z-index: 1;
+            z-index: 4; /* Keeps overlay-container on top */
             animation: moveAndBlurContainer 2s ease-in-out;
             animation-iteration-count: 1;
         }
 
         .color-layer {
             position: absolute;
-            top: 5px;
-            right: 12px;
+            top: 2px;
+            right: 2%;
             width: 95%;
             height: 95%;
             background-image: repeating-linear-gradient(270deg, red, orange, yellow, green, blue, purple, red, orange, yellow, green, blue, purple, red);
@@ -151,27 +153,22 @@
             }
         }
 
+        /* Halo Overlay on top */
         .halo-overlay {
-            position: absolute;
-            width: 60%;
-            /* 增大光晕的宽度，使其超出 overlay-container */
-            height: 50%;
-            /* 增大光晕的高度 */
-            background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 65%, transparent 60%);
+            position: fixed;
+            width: 85%;
+            height: 480px;
+            background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 40%, transparent 60%);
             border-radius: 60%;
-            /* 保持圆润形状 */
-            z-index: 1;
+            z-index: 2;
             opacity: 0;
             animation: haloAppear 3s ease forwards;
             animation-delay: 2s;
+            top: 300px;
             transform: translate(-50%, -50%);
-            /* 确保光晕完全居中 */
             filter: blur(80px);
-            /* 调整模糊效果 */
         }
 
-
-        /* Halo Appear Animation */
         @keyframes haloAppear {
             0% {
                 opacity: 0;
@@ -188,8 +185,6 @@
                 transform: scale(1);
             }
         }
-
-
 
         @media (max-width: 768px) {
             h1 {
@@ -211,41 +206,16 @@
 
             .overlay-container {
                 position: relative;
-                width: 80%;
+                width: 100%;
                 max-width: 800px;
-                z-index: 2;
+                z-index: 4;
             }
         }
 
-        .spacer {
-            position: relative;
-            min-height: 650px;
+        .bottom-text {
+            animation: moveAndBlur 10s linear infinite;
+            margin-right: 30px;
             width: 100%;
-            display: flex;
-            top: 130px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        /* 左下文字容器样式 */
-        .left-bottom-text {
-            position: absolute;
-            bottom: 190px;
-            transform: translateX(0%);
-            z-index: 3;
-            animation: moveAndBlur 10s linear infinite;
-        }
-
-        /* 右上文字容器样式 */
-        .right-top-text {
-            position: absolute;
-            top: 190px;
-            transform: translateX(0%);
-            z-index: 3;
-            animation: moveAndBlur 10s linear infinite;
         }
 
         .spacer-text {
@@ -303,6 +273,80 @@
                 filter: blur(0);
             }
         }
+
+        /* MarqueeBanner with lower z-index */
+        .MarqueeBanner {
+            position: absolute;
+            left: 0;
+            width: 50%;
+            height: auto;
+            display: flex;
+            justify-content: flex-start;
+            z-index: 1; /* Lower z-index for both banners */
+            overflow: hidden;
+            padding: 50px 0;
+            flex-direction: column;
+            padding: 580px 0;
+        }
+
+        .MarqueeBanner-right {
+            position: absolute;
+            right: 0;
+            width: 50%;
+            height: auto;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1; /* Matching z-index with left banner */
+            overflow: hidden;
+            padding: 50px 0;
+            flex-direction: column;
+            padding: 410px 0;
+        }
+
+        .bottom-text-right {
+            animation: moveAndBlurRight 10s linear infinite;
+            margin-left: 30px;
+            width: 100%;
+        }
+
+        .spacer-text-right {
+            font-size: 55px;
+            color: rgb(255, 212, 92);
+            margin: 10px 0;
+            font-family: 'Arial Black', Arial, sans-serif;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        /* 右侧文本向右移动的动画 */
+        @keyframes moveAndBlurRight {
+            0% {
+                transform: translateX(-100vw);
+                filter: blur(10px);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            50% {
+                filter: blur(0);
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+                filter: blur(5px);
+            }
+
+            100% {
+                transform: translateX(100vw);
+                filter: blur(10px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -311,11 +355,30 @@
         <div class="logo-text">🌊聚浪</div>
     </header>
 
-    <!-- Content Container -->
-    <div class="content-container">
-        <h1>欢迎来到浪Go</h1>
-        <p>在这里您可以迅速配置客制化您的Wooting设备，尝试一些与众不同的外观设定，并按您的喜好个性化定制您的设备。当完成配置之后，只需要保存、分享、定制即可。</p>
-        <button onclick="window.location.href='./WOOTING/';">前往改装</button>
+    <!-- MarqueeBanner 容器，包含一行左右移动的文本 -->
+    <div class="MarqueeBanner">
+        <!-- 第一行有一句文本 -->
+        <div class="bottom-text">
+            <h1 class="spacer-text">WOOTING不改等于白买</h1>
+        </div>
+    </div>
+
+    <!-- 右边的MarqueeBanner 容器，包含一行左右移动的文本 -->
+    <div class="MarqueeBanner-right">
+        <div class="bottom-text-right">
+            <h1 class="spacer-text-right">WOOTING不改等于白买</h1>
+        </div>
+    </div>
+
+    <!-- Spacer div with content-container, overlay-container and text animations -->
+    <div class="spacer">
+        <div class="content-container">
+            <h1>欢迎来到浪Go</h1>
+            <p>在这里您可以迅速配置客制化您的Wooting设备，尝试一些与众不同的外观设定，并按您的喜好个性化定制您的设备。当完成配置之后，只需要保存、分享、定制即可。</p>
+            <button onclick="window.location.href='./WOOTING/';">前往改装</button>
+        </div>
+
+        <div class="halo-overlay"></div>
 
         <div class="svg-wrapper">
             <div class="overlay-container">
@@ -323,22 +386,6 @@
                 <img src="https://wootility.io/images/devices/60HE/case.webp" alt="Overlay Image" class="overlay-image">
                 <img src="https://wootility.io/images/devices/60HE/keys.webp" alt="Keys Image" class="keys-image">
             </div>
-        </div>
-    </div>
-
-    <!-- Spacer div with text and halo overlay -->
-    <div class="spacer">
-        <div class="halo-overlay"></div>
-        
-        <!-- 左下文字容器 -->
-        <div class="left-bottom-text">
-            <h1 class="spacer-text">WOOTING不改等于白买</h1>
-            <h1 class="spacer-text">WOOTING不改等于白买</h1>
-        </div>
-        
-        <!-- 右上文字容器 -->
-        <div class="right-top-text">
-            <h1 class="spacer-text">WOOTING不改等于白买</h1>
         </div>
     </div>
 
