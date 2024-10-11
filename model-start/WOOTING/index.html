@@ -75,7 +75,7 @@
         .spacer {
             position: relative;
             width: 100%;
-            min-height: 650px;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -84,26 +84,12 @@
             z-index: 1;
         }
 
-        /* Content Container */
-        .content-container {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-            height: auto;
-            padding-inline-start: var(--chakra-space-8);
-            padding-inline-end: var(--chakra-space-8);
-            position: relative;
-            z-index: 3;
-        }
-
-        /* Overlay Container */
         .overlay-container {
             position: relative;
             width: 100%;
             max-width: 900px;
             top: 45px;
-            z-index: 4; /* Keeps overlay-container on top */
+            z-index: 4;
             animation: moveAndBlurContainer 2s ease-in-out;
             animation-iteration-count: 1;
         }
@@ -153,19 +139,17 @@
             }
         }
 
-        /* Halo Overlay on top */
         .halo-overlay {
-            position: fixed;
+            position: absolute;
             width: 85%;
-            height: 480px;
+            height: 85%;
             background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 40%, transparent 60%);
             border-radius: 60%;
             z-index: 2;
             opacity: 0;
             animation: haloAppear 3s ease forwards;
             animation-delay: 2s;
-            top: 300px;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             filter: blur(80px);
         }
 
@@ -274,33 +258,62 @@
             }
         }
 
-        /* MarqueeBanner with lower z-index */
+        @keyframes slideLeft {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-120vw);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .moved-container {
+            animation: slideLeft 1s forwards, gradient 2s infinite;
+            background: linear-gradient(-60deg, rgba(255, 212, 92, 0.1), rgba(255, 255, 255, 0.1), rgba(0, 0, 255, 0.1));
+            background-size: 300% 300%;
+        }
+
         .MarqueeBanner {
             position: absolute;
             left: 0;
+            top: 31%;
             width: 50%;
             height: auto;
             display: flex;
             justify-content: flex-start;
-            z-index: 1; /* Lower z-index for both banners */
+            z-index: 1;
             overflow: hidden;
             padding: 50px 0;
             flex-direction: column;
-            padding: 580px 0;
         }
 
         .MarqueeBanner-right {
             position: absolute;
             right: 0;
+            top: 12%;
             width: 50%;
             height: auto;
             display: flex;
             justify-content: flex-end;
-            z-index: 1; /* Matching z-index with left banner */
+            z-index: 1;
             overflow: hidden;
             padding: 50px 0;
             flex-direction: column;
-            padding: 410px 0;
         }
 
         .bottom-text-right {
@@ -318,7 +331,6 @@
             position: relative;
         }
 
-        /* 右侧文本向右移动的动画 */
         @keyframes moveAndBlurRight {
             0% {
                 transform: translateX(-100vw);
@@ -347,6 +359,116 @@
                 opacity: 0;
             }
         }
+
+        .info-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 50px;
+            padding-inline-start: 32px;
+            padding-inline-end: 32px;
+        }
+
+        .info-left {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .info-left h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ffd45c;
+        }
+
+        @media (max-width: 768px) {
+            .info-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-left {
+                width: auto;
+                margin-bottom: 20px;
+            }
+        }
+
+        @keyframes slideRightBlur {
+            0% {
+                transform: translateX(0);
+                filter: blur(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(120vw);
+                filter: blur(10px);
+                opacity: 0;
+            }
+        }
+
+        .content-container {
+            overflow: hidden;
+        }
+
+        .moved-out {
+            animation: slideRightBlur 1s forwards;
+        }
+
+        @keyframes moveUpScaleFade {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .spacer-out {
+            animation: moveUpScaleFade 1s forwards;
+        }
+
+        /* 按钮组的样式 */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 0px;
+            width: 100%;
+            /* 确保按钮组占满容器 */
+            justify-content: space-between;
+            /* 平均分布按钮 */
+        }
+
+        /* 按钮样式 */
+        .info-button {
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #ffd45c;
+            color: black;
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            flex: 1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .info-button:hover {
+            background-color: #ffc24f;
+        }
     </style>
 </head>
 
@@ -355,29 +477,19 @@
         <div class="logo-text">🌊聚浪</div>
     </header>
 
-    <!-- MarqueeBanner 容器，包含一行左右移动的文本 -->
     <div class="MarqueeBanner">
-        <!-- 第一行有一句文本 -->
         <div class="bottom-text">
             <h1 class="spacer-text">WOOTING不改等于白买</h1>
         </div>
     </div>
 
-    <!-- 右边的MarqueeBanner 容器，包含一行左右移动的文本 -->
     <div class="MarqueeBanner-right">
         <div class="bottom-text-right">
             <h1 class="spacer-text-right">WOOTING不改等于白买</h1>
         </div>
     </div>
 
-    <!-- Spacer div with content-container, overlay-container and text animations -->
     <div class="spacer">
-        <div class="content-container">
-            <h1>欢迎来到浪Go</h1>
-            <p>在这里您可以迅速配置客制化您的Wooting设备，尝试一些与众不同的外观设定，并按您的喜好个性化定制您的设备。当完成配置之后，只需要保存、分享、定制即可。</p>
-            <button onclick="window.location.href='./WOOTING/';">前往改装</button>
-        </div>
-
         <div class="halo-overlay"></div>
 
         <div class="svg-wrapper">
@@ -389,6 +501,19 @@
         </div>
     </div>
 
+    <div class="info-container">
+        <div class="info-left">
+            <div class="button-group">
+                <button class="info-button">外壳</button>
+                <button class="info-button">轴体</button>
+                <button class="info-button">内胆</button>
+                <button class="info-button">键帽</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    </script>
 </body>
 
 </html>
