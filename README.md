@@ -35,5 +35,5 @@
 
 
 ## 加入聚浪计划：
-![聚浪 #togther](https://github.com/user-attachments/assets/4dc50029-6195-4b0d-9045-fb3f1ee4eaf6)
+https://loongtr.games/
 - 期待你的加入！
