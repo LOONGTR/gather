@@ -1,0 +1,33 @@
+anti_cheat_system/
+├── data/
+│   ├── raw/
+│   │   └── process_log.json
+│   ├── processed/
+│   │   └── processed_data.csv
+│   └── labels/
+│       └── labels.csv
+├── models/
+│   └── anti_cheat_model.joblib
+├── src/
+│   ├── __init__.py
+│   ├── monitor.py
+│   ├── preprocess.py
+│   ├── train.py
+│   ├── detect.py
+│   └── utils.py
+├── config/
+│   └── config.yaml
+├── logs/
+│   ├── monitor.log
+│   ├── detect.log
+│   └── training.log
+├── scripts/
+│   ├── setup.sh
+│   └── run.sh
+├── tests/
+│   ├── test_monitor.py
+│   ├── test_preprocess.py
+│   └── test_model.py
+├── requirements.txt
+├── README.md
+└── .gitignore

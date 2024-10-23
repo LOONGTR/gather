@@ -1,0 +1,4 @@
+2024-04-27 10:00:05,000 - detect - INFO - 加载模型完成：models/anti_cheat_model.joblib
+2024-04-27 10:00:10,000 - detect - WARNING - [警告] 发现可疑进程: cheatengine.exe (PID: 5678)
+2024-04-27 10:00:10,500 - detect - INFO - [终止] 进程 5678 已被终止。
+...
