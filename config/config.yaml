@@ -1,0 +1,16 @@
+# config/config.yaml
+monitoring:
+  interval: 5  # 监控间隔（秒）
+
+logging:
+  monitor_log: logs/monitor.log
+  detect_log: logs/detect.log
+  training_log: logs/training.log
+
+model:
+  path: models/anti_cheat_model.joblib
+
+data:
+  raw: data/raw/process_log.json
+  processed: data/processed/processed_data.csv
+  labels: data/labels/labels.csv

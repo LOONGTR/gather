@@ -1,0 +1,2 @@
+timestamp,pid,name,exe,cmdline,cpu_percent,memory_rss,name_length,cmdline_length
+1700000000,1234,example.exe,C:\\Program Files\\Example\\example.exe,example.exe -arg1 -arg2,5.0,104857600,11,19

@@ -1,0 +1,13 @@
+{
+    "timestamp": 1700000000,
+    "processes": [
+        {
+            "pid": 1234,
+            "name": "example.exe",
+            "exe": "C:\\Program Files\\Example\\example.exe",
+            "cmdline": "example.exe -arg1 -arg2",
+            "cpu_percent": 5.0,
+            "memory_info": 104857600
+        }
+    ]
+}
